@@ -59,7 +59,7 @@ object Example {
 
     sealed trait IO2[A] {
       def run: A
-      def andThen(f: A => IO2[B]): IO2[B]
+      def andThen[B](f: A => IO2[B]): IO2[B] = ???
     }
     // actually, this function isn't complete, but let's assume it always runs ok
     case object ReadLineIO2 extends IO2[String] {
@@ -69,8 +69,7 @@ object Example {
       def run: Unit = println(msg)
     }
 
-    // so what we want here is a function on IO2[A], which takes the output of ReadLineIO2 (A)
-    // 
+    // so what we want here is a function on IO2[A], which takes the output of ReadLineIO2 (A) 
     ReadLineIO2.andThen(n => PrintLineIO2(s"Hi there $n"))
   }
 }
